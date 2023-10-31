@@ -1,11 +1,15 @@
 "use client";
 
-import { useChat } from "ai/react";
-import { cn } from "./lib/utils";
+import {useChat} from "ai/react";
+import {cn} from "./lib/utils";
 import HistoryCard from "./components/HistoryCard";
+import Image from "next/image";
+import {useState} from "react";
+import Link from "next/link";
 
 export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit, data } = useChat();
+  const {messages, input, handleInputChange, handleSubmit, data} = useChat();
+  const [animateEffect, setAnimateEffect] = useState(false);
   return (
     <main className="flex flex-row w-full h-full gap-5">
       <section className="basis-2/3 py-2 px-6 mb-8 bg-[#1A1A1A] rounded-xl relative overflow-y-auto shadow-lg">
@@ -32,10 +36,10 @@ export default function Chat() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="absolute flex flex-row p-2 mb-8 w-[70%] bottom-0 text-center bg-[#3C3C3C] rounded-xl shadow-lg"
+          className="absolute left-[50%] -translate-x-[50%] flex flex-row p-2  mb-8 w-[90%] bottom-0 text-center bg-[#3C3C3C] rounded-xl shadow-lg"
         >
           <input
-            className="w-full bg-transparent font-bold text-neutral-50 font-xl px-4"
+            className="w-full bg-transparent focus:border-none focus:outline-none font-bold text-neutral-50 font-xl px-4"
             value={input}
             placeholder="گفت و گو را از اینجا شروع کنید!"
             onChange={handleInputChange}
@@ -45,14 +49,45 @@ export default function Chat() {
           </button>
         </form>
       </section>
-      <div className="basis-1/3 grow-[1] w-full">
+      <div className="basis-1/3 grow-[1] w-full flex flex-col gap-5">
         <section className=" flex flex-col gap-4 min-w-max bg-[#1A1A1A] rounded-xl p-4">
+          <div className="flex justify-between">
+            <div className="flex gap-2">
+              <Image
+                src="/images/history.svg"
+                width={25}
+                height={25}
+                alt="history icon"
+              />
+              <p className="text-white text-[1.5rem] font-bold">مباحث گذشته</p>
+            </div>
+            <button
+              className={`text-white ${animateEffect && "animate-wiggle"}`}
+              onClick={() => setAnimateEffect(true)}
+              onAnimationEnd={() => setAnimateEffect(false)}
+            >
+              پاک کردن همه
+            </button>
+          </div>
           <HistoryCard text="اختلال پینگ در استان تهران" />
           <HistoryCard text="اختلال پینگ در استان تهران" />
           <HistoryCard text="اختلال پینگ در استان تهران" />
           <HistoryCard text="اختلال پینگ در استان تهران" />
           <HistoryCard text="اختلال پینگ در استان تهران" />
         </section>
+
+        <Link
+          href="https://eyesp.live/information"
+          className="flex justify-between w-full rounded-xl p-5 bg-[#1A1A1A] "
+        >
+          <span className="text-white">آموزش نحوه استفاده</span>
+          <Image
+            src="/images/graduate.svg"
+            width={25}
+            height={25}
+            alt="education icon"
+          />
+        </Link>
       </div>
     </main>
   );
