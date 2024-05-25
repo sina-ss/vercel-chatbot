@@ -1,20 +1,18 @@
 "use client";
-
-import {useChat} from "ai/react";
-import {cn} from "./lib/utils";
-import HistoryCard from "./components/HistoryCard";
-import Image from "next/image";
-import {useState} from "react";
-import Link from "next/link";
+import { useChat } from "ai/react";
+import { cn } from "./lib/utils";
+import ReactMarkdown from "react-markdown";
 
 export default function Chat() {
-  const {messages, input, handleInputChange, handleSubmit, data} = useChat();
-  const [animateEffect, setAnimateEffect] = useState(false);
+  const { messages, input, handleInputChange, handleSubmit, data } = useChat();
+
   return (
-    <main className="flex flex-row w-full h-full gap-5">
-      <section className="basis-3/3 md:basis-2/3 py-2 px-6 bg-[#1A1A1A] rounded-xl relative overflow-y-auto shadow-lg">
-        <h2 className="self-start text-neutral-50 text-4xl my-2">ربات متخصص</h2>
-        <div className="flex flex-col items-center h-[70dvh]">
+    <main className="flex flex-col w-full gap-5 mt-10">
+      <section className="w-full h-full py-2 px-6 bg-[#1A1A1A] rounded-xl overflow-y-auto shadow-lg relative">
+        <h2 className="self-start text-neutral-50 text-4xl my-2 absolute top-2 right-2">
+          ربات متخصص
+        </h2>
+        <div className="flex flex-col items-center h-full overflow-y-auto pt-10">
           {messages.length > 0 ? (
             messages.map((m) => (
               <div
@@ -29,7 +27,25 @@ export default function Chat() {
                   }
                 )}
               >
-                {m.content}
+                <ReactMarkdown
+                  components={{
+                    p: ({ node, ...props }) => (
+                      <p className="leading-1" {...props} />
+                    ),
+                    ul: ({ node, ...props }) => (
+                      <ul className="leading-1" {...props} />
+                    ),
+                    ol: ({ node, ...props }) => (
+                      <ol className="leading-1" {...props} />
+                    ),
+                    li: ({ node, ...props }) => (
+                      <li className="leading-1" {...props} />
+                    ),
+                    // Add more elements as needed
+                  }}
+                >
+                  {m.content}
+                </ReactMarkdown>
               </div>
             ))
           ) : (
@@ -41,7 +57,6 @@ export default function Chat() {
                 </span>{" "}
                 و یا هر مورد مرتبط دیگر دارید، از من بپرسید
               </p>
-
               <div className="text-white flex flex-col gap-3">
                 <p className="mb-3">برای مثال:</p>
                 <p className="p-3 bg-[#262626] rounded-xl">
@@ -54,70 +69,21 @@ export default function Chat() {
             </div>
           )}
         </div>
-        <form
-          onSubmit={handleSubmit}
-          className="absolute left-[50%] -translate-x-[50%] flex flex-row p-2  mb-8 w-[90%] bottom-0 text-center bg-[#3C3C3C] rounded-xl shadow-lg"
-        >
-          <input
-            className="w-full bg-transparent focus:border-none focus:outline-none font-bold text-neutral-50 font-xl px-4"
-            value={input}
-            placeholder="گفت و گو را از اینجا شروع کنید!"
-            onChange={handleInputChange}
-          />
-          <button className="bg-[#008EDD] rounded-xl py-4 px-12 text-neutral-50">
-            بفرست
-          </button>
-        </form>
       </section>
-      <div className="basis-1/3 grow-[1] w-full flex-col justify-between gap-5 hidden md:flex">
-        <section className=" flex flex-col gap-4 min-w-max bg-[#1A1A1A] rounded-xl p-4">
-          <div className="flex justify-between">
-            <div className="flex gap-2">
-              <Image
-                src="/images/history.svg"
-                width={25}
-                height={25}
-                alt="history icon"
-              />
-              <p className="text-white text-[1.5rem] font-bold">مباحث گذشته</p>
-            </div>
-            <button
-              className={`text-white ${animateEffect && "animate-wiggle"}`}
-              onClick={() => setAnimateEffect(true)}
-              onAnimationEnd={() => setAnimateEffect(false)}
-            >
-              پاک کردن همه
-            </button>
-          </div>
-          <HistoryCard text="اختلال پینگ در استان تهران" />
-          <HistoryCard text="اختلال پینگ در استان تهران" />
-          <HistoryCard text="اختلال پینگ در استان تهران" />
-          <HistoryCard text="اختلال پینگ در استان تهران" />
-          <HistoryCard text="اختلال پینگ در استان تهران" />
-        </section>
-
-        <Link
-          href="https://eyesp.live/information"
-          className="flex mt-auto justify-between w-full rounded-xl p-5 bg-[#1A1A1A] "
-        >
-          <span className="text-white">آموزش نحوه استفاده</span>
-          <Image
-            src="/images/graduate.svg"
-            width={25}
-            height={25}
-            alt="education icon"
-          />
-        </Link>
-        <button className="flex justify-between w-full rounded-xl p-5 bg-[#1A1A1A] ">
-          <span className="text-white">تنظیمات</span>
-          <Image
-            src="/images/setting.svg"
-            width={25}
-            height={25}
-            alt="education icon"
-          />
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-row p-2 w-full bg-[#3C3C3C] rounded-xl shadow-lg"
+      >
+        <input
+          className="w-full bg-transparent focus:border-none focus:outline-none font-bold text-neutral-50 font-xl px-4"
+          value={input}
+          placeholder="گفت و گو را از اینجا شروع کنید!"
+          onChange={handleInputChange}
+        />
+        <button className="bg-[#008EDD] rounded-xl py-4 px-12 text-neutral-50">
+          بفرست
         </button>
-      </div>
+      </form>
     </main>
   );
 }

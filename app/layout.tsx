@@ -1,9 +1,9 @@
-import Logo from './components/Logo';
-import './globals.css';
+import Logo from "./components/Logo";
+import "./globals.css";
 
 export const metadata = {
-  title: 'آی اس پی | چت بات',
-  description: 'چت بات آی اس پی. یک چت بات برای تمام مشکلات اینترنت.',
+  title: "آی اس پی | چت بات",
+  description: "چت بات آی اس پی. یک چت بات برای تمام مشکلات اینترنت.",
 };
 
 export default function RootLayout({
@@ -13,10 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='flex flex-col justify-center items-center container mx-auto max-h-full'>
-        <Logo/>
+      <body className="flex flex-col justify-center items-center container mx-auto max-h-full">
         {children}
-        </body>
+      </body>
     </html>
   );
 }
