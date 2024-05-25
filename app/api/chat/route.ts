@@ -22,10 +22,10 @@ export async function POST(req: Request) {
 
   // Ask OpenAI for a streaming chat completion given the updated messages
   const response = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4',
     stream: true,
     messages: updatedMessages,
-    max_tokens: 400
+    max_tokens: 800
   });
 
   // Convert the response into a friendly text-stream
