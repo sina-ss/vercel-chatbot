@@ -8,11 +8,8 @@ export default function Chat() {
 
   return (
     <main className="flex flex-col w-full gap-5 mt-10">
-      <section className="w-full h-full py-2 px-6 bg-[#1A1A1A] rounded-xl overflow-y-auto shadow-lg relative">
-        <h2 className="self-start text-neutral-50 text-4xl my-2 absolute top-2 right-2">
-          ربات متخصص
-        </h2>
-        <div className="flex flex-col items-center h-full overflow-y-auto pt-10">
+      <section className="w-full h-full py-2 bg-[#1A1A1A] rounded-xl overflow-y-auto shadow-lg relative">
+        <div className="flex flex-col px-6 items-center h-full overflow-y-auto pt-10">
           {messages.length > 0 ? (
             messages.map((m) => (
               <div
@@ -49,7 +46,7 @@ export default function Chat() {
               </div>
             ))
           ) : (
-            <div className="max-w-[35%] text-center flex flex-col gap-10 my-auto">
+            <div className="hidden sm:flex max-w-[35%] text-center flex-col gap-10 my-auto">
               <p className="text-white text-[1.2rem] text-[700]">
                 هر سوالی که درباره{" "}
                 <span className="text-[#85CCF4]">

@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     model: 'gpt-4o',
     stream: true,
     messages: updatedMessages,
-    max_tokens: 800
+    max_tokens: 1000
   });
 
   // Convert the response into a friendly text-stream
